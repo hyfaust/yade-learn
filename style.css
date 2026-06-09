@@ -138,7 +138,19 @@ body {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+}
+
+.github-link {
+  display: flex;
+  align-items: center;
+  color: var(--text-primary);
+  opacity: 0.8;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.github-link:hover {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 /* Hamburger button */
