@@ -4534,14 +4534,6 @@ yadedaily fluid_coupling.py
         </div>
       </div>
 
-      <!-- SVG Animation Modal -->
-      <div id="svg-modal-overlay" class="svg-modal-overlay">
-        <div class="svg-modal">
-          <button class="svg-modal-close" onclick="App.closeAnimation()">&times;</button>
-          <div id="svg-modal-content"></div>
-        </div>
-      </div>
-
       <!-- Quick Start -->
       <div class="welcome-section">
         <h2>快速开始</h2>
