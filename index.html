@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YADE DEM 新手学习教程</title>
+
+  <!-- Prism.js CSS (dark theme default, overridden by our styles) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <!-- Prism line-numbers plugin -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+
+  <!-- Our stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+
+  <!-- Reading progress bar -->
+  <div id="reading-progress" class="reading-progress"></div>
+
+  <!-- Header -->
+  <header id="site-header" class="site-header">
+    <div class="header-left">
+      <button id="hamburger-btn" class="hamburger-btn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <h1 class="site-title">YADE DEM 新手学习教程</h1>
+    </div>
+    <div class="header-right">
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar overlay for mobile -->
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <!-- Search -->
+    <div class="sidebar-search">
+      <input type="text" id="search-input" placeholder="搜索章节..." autocomplete="off">
+      <div id="search-results" class="search-results"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="sidebar-nav" class="sidebar-nav">
+      <!-- Level: Beginner -->
+      <div class="nav-group" data-level="beginner">
+        <div class="nav-group-header" data-toggle="beginner">
+          <span class="nav-level-icon">🟢</span>
+          <span class="nav-level-title">入门基础</span>
+          <span class="nav-chevron">▾</span>
+        </div>
+        <ul class="nav-group-list open" data-group="beginner">
+          <li class="nav-item" data-chapter="1">
+            <a href="#chapter-1">
+              <span class="nav-item-status"></span>
+              <span class="nav-item-title">1. 弹跳球</span>
+            </a>
+          </li>
+          <li class="nav-item" data-chapter="2">
+            <a href="#chapter-2">
+              <span class="nav-item-status"></span>
+              <span class="nav-item-title">2. 重力沉降</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Level: Intermediate -->
+      <div class="nav-group" data-level="intermediate">
+        <div class="nav-group-header" data-toggle="intermediate">
+          <span class="nav-level-icon">🟡</span>
+          <span class="nav-level-title">进阶技能</span>
+          <span class="nav-chevron">▾</span>
+        </div>
+        <ul class="nav-group-list open" data-group="intermediate">
+          <li class="nav-item" data-chapter="3">
+            <a href="#chapter-3">
+              <span class="nav-item-status"></span>
+              <span class="nav-item-title">3. 一维压缩试验</span>
+            </a>
+          </li>
+          <li class="nav-item" data-chapter="4">
+            <a href="#chapter-4">
+              <span class="nav-item-status"></span>
+              <span class="nav-item-title">4. 周期性简单剪切</span>
+            </a>
+          </li>
+          <li class="nav-item" data-chapter="5">
+            <a href="#chapter-5">
+              <span class="nav-item-status"></span>
+              <span class="nav-item-title">5. 球体堆积技术</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Level: Advanced -->
+      <div class="nav-group" data-level="advanced">
+        <div class="nav-group-header" data-toggle="advanced">
+          <span class="nav-level-icon">🔴</span>
+          <span class="nav-level-title">高级应用</span>
+          <span class="nav-chevron">▾</span>
+        </div>
+        <ul class="nav-group-list open" data-group="advanced">
+          <li class="nav-item" data-chapter="6">
+            <a href="#chapter-6">
+              <span class="nav-item-status"></span>
+              <span class="nav-item-title">6. 三轴试验</span>
+            </a>
+          </li>
+          <li class="nav-item" data-chapter="7">
+            <a href="#chapter-7">
+              <span class="nav-item-status"></span>
+              <span class="nav-item-title">7. 混凝土力学</span>
+            </a>
+          </li>
+          <li class="nav-item" data-chapter="8">
+            <a href="#chapter-8">
+              <span class="nav-item-status"></span>
+              <span class="nav-item-title">8. 团簇与破碎</span>
+            </a>
+          </li>
+          <li class="nav-item" data-chapter="9">
+            <a href="#chapter-9">
+              <span class="nav-item-status"></span>
+              <span class="nav-item-title">9. 流固耦合</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main content area -->
+  <main id="main-content" class="main-content">
+    <div id="content-wrapper" class="content-wrapper">
+      <!-- Content injected here by JS -->
+    </div>
+  </main>
+
+  <!-- CDN: Marked.js -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <!-- CDN: Prism.js core + Python + Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+  <!-- Our application script -->
+  <script src="app.js"></script>
+</body>
+</html>

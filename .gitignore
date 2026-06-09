@@ -1,0 +1,27 @@
+# Qwen Code workspace
+.qwen/
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+
+# YADE temp files
+*.vtu
+*.vtp
+*.vtk
+/tmp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
