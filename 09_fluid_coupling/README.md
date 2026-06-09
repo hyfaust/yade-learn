@@ -90,15 +90,13 @@
 
 雷诺数是惯性力与粘性力之比，决定了流动状态：
 
-```
-Re = ρ_f × d_p × |v_rel| / μ
-```
+$$Re = \frac{\rho_f \times d_p \times |v_{\text{rel}}|}{\mu}$$
 
 其中：
-- ρ_f = 流体密度
-- d_p = 颗粒直径
-- |v_rel| = 流体-颗粒相对速度
-- μ = 流体动力粘度
+- $\rho_f$ = 流体密度
+- $d_p$ = 颗粒直径
+- $|v_{\text{rel}}|$ = 流体-颗粒相对速度
+- $\mu$ = 流体动力粘度
 
 | Re 范围 | 流动状态 | 适用阻力模型 |
 |---------|----------|-------------|
@@ -111,25 +109,19 @@ Re = ρ_f × d_p × |v_rel| / μ
 
 适用于极低雷诺数（Re < 1），即蠕动流：
 
-```
-F_drag = 3 × π × μ × d_p × v_rel × f(ε)
-```
+$$F_{\text{drag}} = 3 \times \pi \times \mu \times d_p \times v_{\text{rel}} \times f(\varepsilon)$$
 
-其中 f(ε) 是孔隙率修正函数（Richardson-Zaki 关系）：
+其中 $f(\varepsilon)$ 是孔隙率修正函数（Richardson-Zaki 关系）：
 
-```
-f(ε) = ε^(-χ),  χ = 3.7 - 0.65 × exp(-((1.5 - log10(Re))²) / 2)
-```
+$$f(\varepsilon) = \varepsilon^{-\chi}, \quad \chi = 3.7 - 0.65 \times \exp\left(-\frac{(1.5 - \log_{10}(Re))^2}{2}\right)$$
 
-对于 Stokes 流：f(ε) ≈ 1/ε（孔隙率越小，阻力越大）。
+对于 Stokes 流：$f(\varepsilon) \approx 1/\varepsilon$（孔隙率越小，阻力越大）。
 
 #### 2.3.3 Ergun 方程
 
 Ergun (1952) 提出的阻力关系，适用于填充床中的流体流动：
 
-```
-Δp/L = 150 × μ × (1-ε)² / (ε³ × d_p²) × v + 1.75 × ρ_f × (1-ε) / (ε³ × d_p) × v²
-```
+$$\frac{\Delta p}{L} = 150 \times \mu \times \frac{(1-\varepsilon)^2}{\varepsilon^3 \times d_p^2} \times v + 1.75 \times \rho_f \times \frac{(1-\varepsilon)}{\varepsilon^3 \times d_p} \times v^2$$
 
 上式包含两项：
 - 第一项：粘性损失（低速时主导，正比于速度）
@@ -139,21 +131,15 @@ Ergun (1952) 提出的阻力关系，适用于填充床中的流体流动：
 
 Di Felice (1994) 提出了更通用的阻力关系：
 
-```
-F_drag = 0.5 × C_d × ρ_f × (π/4) × d_p² × |v_rel| × v_rel × ε^(-χ)
-```
+$$F_{\text{drag}} = 0.5 \times C_d \times \rho_f \times \frac{\pi}{4} \times d_p^2 \times |v_{\text{rel}}| \times v_{\text{rel}} \times \varepsilon^{-\chi}$$
 
-其中 C_d 是单颗粒阻力系数：
+其中 $C_d$ 是单颗粒阻力系数：
 
-```
-C_d = (0.63 + 4.8 / √Re)²    （适用于所有 Re 范围）
-```
+$$C_d = \left(0.63 + \frac{4.8}{\sqrt{Re}}\right)^2 \quad \text{（适用于所有 Re 范围）}$$
 
 孔隙率修正指数 χ：
 
-```
-χ = 3.7 - 0.65 × exp(-((1.5 - log10(Re))²) / 2)
-```
+$$\chi = 3.7 - 0.65 \times \exp\left(-\frac{(1.5 - \log_{10}(Re))^2}{2}\right)$$
 
 ### 2.4 渗透系数
 
@@ -161,48 +147,40 @@ C_d = (0.63 + 4.8 / √Re)²    （适用于所有 Re 范围）
 
 在低速渗流中，流量与水力梯度成正比（Darcy, 1856）：
 
-```
-v = K × i = K × Δh / L
-```
+$$v = K \times i = K \times \frac{\Delta h}{L}$$
 
 其中：
-- v = 渗透流速（表观速度）
-- K = 渗透系数 [m/s]
-- i = 水力梯度
-- Δh = 水头损失
-- L = 渗流路径长度
+- $v$ = 渗透流速（表观速度）
+- $K$ = 渗透系数 [m/s]
+- $i$ = 水力梯度
+- $\Delta h$ = 水头损失
+- $L$ = 渗流路径长度
 
 #### 2.4.2 Kozeny-Carman 方程
 
 渗透系数与颗粒材料孔隙率的关系由 Kozeny-Carman 方程给出：
 
-```
-K = (ρ_f × g / μ) × (ε³ / (1-ε)²) × (d_p² / 180)
-```
+$$K = \frac{\rho_f \times g}{\mu} \times \frac{\varepsilon^3}{(1-\varepsilon)^2} \times \frac{d_p^2}{180}$$
 
 关键规律：
-- K 正比于 d_p²（颗粒越大，渗透性越强）
-- K 随 ε 的增大而急剧增大（孔隙率增大，渗透性增强）
-- K 反比于 (1-ε)²
+- $K$ 正比于 $d_p^2$（颗粒越大，渗透性越强）
+- $K$ 随 $\varepsilon$ 的增大而急剧增大（孔隙率增大，渗透性增强）
+- $K$ 反比于 $(1-\varepsilon)^2$
 
 ### 2.5 浮力
 
 浸没在流体中的颗粒受到阿基米德浮力：
 
-```
-F_buoyancy = -ρ_f × V_p × g
-```
+$$F_{\text{buoyancy}} = -\rho_f \times V_p \times g$$
 
 其中：
-- V_p = 颗粒体积 = (π/6) × d_p³
-- g = 重力加速度（方向向下）
+- $V_p$ = 颗粒体积 = $(\pi/6) \times d_p^3$
+- $g$ = 重力加速度（方向向下）
 - 负号表示浮力方向向上
 
 在多孔介质中，浮力的有效作用需要考虑孔隙率：
 
-```
-F_buoyancy_eff = -ρ_f × (1-ε) × V_cell × g / N_particles
-```
+$$F_{\text{buoyancy,eff}} = -\rho_f \times (1-\varepsilon) \times V_{\text{cell}} \times g / N_{\text{particles}}$$
 
 ### 2.6 FlowEngine / PFV
 
@@ -251,23 +229,17 @@ vzFluid = [fluidVelocity] * nLayers  # 均匀分布
 
 对于 Ergun 方程，在最小流化条件下的力平衡：
 
-```
-Δp × A = W_effective = (ρ_p - ρ_f) × (1 - ε_mf) × V_bed × g
-```
+$$\Delta p \times A = W_{\text{effective}} = (\rho_p - \rho_f) \times (1 - \varepsilon_{mf}) \times V_{\text{bed}} \times g$$
 
 简化后得到：
 
-```
-U_mf ≈ (d_p² × (ρ_p - ρ_f) × g × ε_mf³) / (180 × μ × (1 - ε_mf))
-```
+$$U_{mf} \approx \frac{d_p^2 \times (\rho_p - \rho_f) \times g \times \varepsilon_{mf}^3}{180 \times \mu \times (1 - \varepsilon_{mf})}$$
 
 ### 2.8 无量纲数
 
 #### 2.8.1 雷诺数 (Reynolds Number, Re)
 
-```
-Re = ρ_f × U × d_p / μ
-```
+$$Re = \frac{\rho_f \times U \times d_p}{\mu}$$
 
 - Re < 1：Stokes 流，粘性力主导
 - Re > 1000：湍流，惯性力主导
@@ -275,18 +247,14 @@ Re = ρ_f × U × d_p / μ
 
 #### 2.8.2 斯托克斯数 (Stokes Number, Stk)
 
-```
-Stk = (ρ_p × d_p² × U) / (18 × μ × L)
-```
+$$Stk = \frac{\rho_p \times d_p^2 \times U}{18 \times \mu \times L}$$
 
 - Stk << 1：颗粒跟随流体运动（如烟雾）
 - Stk >> 1：颗粒惯性主导，不受流体影响（如沙尘暴中的大颗粒）
 
 #### 2.8.3 阿基米德数 (Archimedes Number, Ar)
 
-```
-Ar = (ρ_f × (ρ_p - ρ_f) × g × d_p³) / μ²
-```
+$$Ar = \frac{\rho_f \times (\rho_p - \rho_f) \times g \times d_p^3}{\mu^2}$$
 
 - Ar 综合考虑了重力、浮力和粘性力
 - 用于关联最小流化速度
@@ -405,9 +373,7 @@ yadedaily fluid_coupling.py
 计算并绘制流化过程中的压力降 Δp 与流速 U 的关系图。
 
 **提示**：在完全流化条件下，压力降应等于床层的单位面积有效重量：
-```
-Δp = (ρ_p - ρ_f) × (1 - ε) × H_bed × g
-```
+$$\Delta p = (\rho_p - \rho_f) \times (1 - \varepsilon) \times H_{\text{bed}} \times g$$
 
 ---
 

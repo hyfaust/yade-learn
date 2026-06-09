@@ -43,21 +43,19 @@
 
 Clump 作为一个刚体运动，所有成员球体跟随整体的平移和旋转：
 
-```
 每个成员球体的位置：
-  r_i = R + Q × r_local_i
+
+$$r_i = R + Q \times r_{\text{local},i}$$
 
 其中：
-  R = Clump 质心的全局位置
-  Q = Clump 的旋转四元数
-  r_local_i = 成员球体相对于质心的局部坐标（在 Clump 局部坐标系中）
-```
+- $R$ = Clump 质心的全局位置
+- $Q$ = Clump 的旋转四元数
+- $r_{\text{local},i}$ = 成员球体相对于质心的局部坐标（在 Clump 局部坐标系中）
 
 Clump 的速度和角速度：
-```
-  v_i = V + ω × (r_i - R)     # 成员球体的速度
-  其中 V = 质心线速度，ω = 角速度
-```
+$$v_i = V + \omega \times (r_i - R)$$
+
+其中 $V$ = 质心线速度，$\omega$ = 角速度
 
 ### 2.2 创建 Clump
 
@@ -151,18 +149,14 @@ tetra = [
 
 Clump 的总质量是所有成员球体质量之和：
 
-```
-m = Σᵢ ρᵢ × (4/3)·π·rᵢ³
-```
+$$m = \sum_i \rho_i \times \frac{4}{3} \cdot \pi \cdot r_i^3$$
 
 #### 2.3.2 转动惯量计算
 
 Clump 的转动惯量通过**平行轴定理**计算。对于每个成员球体，先计算其对自身中心的
 惯性张量，然后平移到 Clump 的质心：
 
-```
-I_clump = Σᵢ [I_i + m_i × (d_i²·E - d_i ⊗ d_i)]
-```
+$$I_{\text{clump}} = \sum_i \left[ I_i + m_i \times (d_i^2 \cdot E - d_i \otimes d_i) \right]$$
 
 其中：
 - I_i = (2/5) × m_i × r_i² × E 是球体的自身惯性张量

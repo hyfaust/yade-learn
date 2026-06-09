@@ -45,7 +45,7 @@
 **sigmaT（拉伸强度）**：
 
 这是 Cpm 模型最重要的参数之一。它定义了接触能够承受的最大拉力。当接触法向力
-达到 `sigmaT × A_eff`（有效面积）时，接触开始产生损伤。
+达到 $\sigma_T \times A_{\text{eff}}$（有效面积）时，接触开始产生损伤。
 
 在混凝土中，拉伸强度远小于压缩强度（典型比值 ft/fc ≈ 1/10 ~ 1/15），这种
 不对称性是混凝土最重要的力学特征。Cpm 模型自然地捕捉了这一点，因为：
@@ -73,11 +73,17 @@
 当两个 CpmMat 材料的颗粒发生接触时，接触参数由 `Ip2_CpmMat_CpmMat_CpmPhys`
 通过以下方式计算：
 
-```
-等效杨氏模量: E_eff = 2·E₁·E₂ / (E₁ + E₂)    （调和平均）
-等效拉伸强度: σT_eff = min(σT₁, σT₂)           （取较小值）
-等效延性:     d_eff = (d₁ + d₂) / 2            （算术平均）
-```
+$$
+E_{\text{eff}} = \frac{2 E_1 E_2}{E_1 + E_2} \quad \text{(等效杨氏模量，调和平均)}
+$$
+
+$$
+\sigma_{T,\text{eff}} = \min(\sigma_{T_1}, \sigma_{T_2}) \quad \text{(等效拉伸强度，取较小值)}
+$$
+
+$$
+d_{\text{eff}} = \frac{d_1 + d_2}{2} \quad \text{(等效延性，算术平均)}
+$$
 
 ### 2.2 CpmPhys 接触物理
 
@@ -108,10 +114,13 @@
 
 有效刚度的退化公式：
 
-```
-kn_eff = kn × (1 - d)
-ks_eff = ks × (1 - d)
-```
+$$
+k_n^{\text{eff}} = k_n (1 - d)
+$$
+
+$$
+k_s^{\text{eff}} = k_s (1 - d)
+$$
 
 这意味着损伤的累积会导致接触刚度的降低，宏观上表现为应力-应变曲线的软化段。
 
@@ -122,26 +131,26 @@ ks_eff = ks × (1 - d)
 #### 2.3.1 力-位移关系
 
 **法向方向**：
-- 压缩 (δ_n < 0)：F_n = kn × δ_n（弹性，无损伤）
-- 拉伸 (δ_n > 0)：
-  - 若 δ_n < epsCrackOnset × L_eff：F_n = kn × δ_n（弹性阶段）
-  - 若 δ_n > epsCrackOnset × L_eff：F_n = kn × (1 - d) × δ_n（损伤阶段）
+- 压缩 ($\delta_n < 0$)：$F_n = k_n \times \delta_n$（弹性，无损伤）
+- 拉伸 ($\delta_n > 0$)：
+  - 若 $\delta_n < \varepsilon_{\text{crackOnset}} \times L_{\text{eff}}$：$F_n = k_n \times \delta_n$（弹性阶段）
+  - 若 $\delta_n > \varepsilon_{\text{crackOnset}} \times L_{\text{eff}}$：$F_n = k_n \times (1 - d) \times \delta_n$（损伤阶段）
 
 **切向方向**：
 - 切向力满足 Mohr-Coulomb 屈服准则：
-  |F_t| ≤ μ × |F_n| + c × A_eff
+  $|F_t| \leq \mu \times |F_n| + c \times A_{\text{eff}}$
 
 #### 2.3.2 损伤演化法则
 
 当法向应变超过 epsCrackOnset 时，损伤按以下规律演化：
 
-```
-d = 1 - (epsCrackOnset / epsN) × exp(-(epsN - epsCrackOnset) / (relDuctility × epsCrackOnset))
-```
+$$
+d = 1 - \frac{\varepsilon_{\text{crackOnset}}}{\varepsilon_N} \exp\!\left(-\frac{\varepsilon_N - \varepsilon_{\text{crackOnset}}}{\text{relDuctility} \cdot \varepsilon_{\text{crackOnset}}}\right)
+$$
 
 这是一个指数衰减形式：
-- 当 epsN → epsCrackOnset 时，d → 0（刚超过阈值，损伤很小）
-- 当 epsN → ∞ 时，d → 1（应变很大时，完全破坏）
+- 当 $\varepsilon_N \to \varepsilon_{\text{crackOnset}}$ 时，$d \to 0$（刚超过阈值，损伤很小）
+- 当 $\varepsilon_N \to \infty$ 时，$d \to 1$（应变很大时，完全破坏）
 
 `relDuctility` 控制了这个衰减的速度。较大的 relDuctility 使得衰减更慢，宏观上
 表现为更缓的软化曲线。
@@ -155,15 +164,15 @@ d = 1 - (epsCrackOnset / epsN) × exp(-(epsN - epsCrackOnset) / (relDuctility ×
 
 有效应力的概念：
 
-```
-σ_eff = σ / (1 - d)
-```
+$$
+\sigma_{\text{eff}} = \frac{\sigma}{1 - d}
+$$
 
 应变等价原理：
 
-```
-ε = σ_eff / E₀ = σ / (E₀ × (1 - d)) = σ / E_d
-```
+$$
+\varepsilon = \frac{\sigma_{\text{eff}}}{E_0} = \frac{\sigma}{E_0 (1 - d)} = \frac{\sigma}{E_d}
+$$
 
 其中 E_d = E₀ × (1 - d) 是损伤后的弹性模量。
 
@@ -181,11 +190,9 @@ d = 1 - (epsCrackOnset / epsN) × exp(-(epsN - epsCrackOnset) / (relDuctility ×
 
 混凝土的一个关键特性是**拉压强度不对称**：
 
-```
-拉伸强度 ft ≈ 2~5 MPa
-压缩强度 fc ≈ 20~60 MPa
-比值 ft/fc ≈ 1/10 ~ 1/15
-```
+$$
+f_t \approx 2 \sim 5 \text{ MPa}, \quad f_c \approx 20 \sim 60 \text{ MPa}, \quad \frac{f_t}{f_c} \approx \frac{1}{10} \sim \frac{1}{15}
+$$
 
 在 Cpm 模型中，这种不对称性自然产生：
 

@@ -67,25 +67,23 @@ yadedaily periodic_shear.py
 
 模拟盒子由一个变形梯度张量 F 描述：
 
-```
-F = hSize = | h11  h12  h13 |
-             | h21  h22  h23 |
-             | h31  h32  h33 |
-```
+$$
+\mathbf{F} = \text{hSize} = \begin{bmatrix} h_{11} & h_{12} & h_{13} \\ h_{21} & h_{22} & h_{23} \\ h_{31} & h_{32} & h_{33} \end{bmatrix}
+$$
 
 其中每一行对应盒子的一个边向量。颗粒的实际位置通过以下方式确定：
 
-```
-x_real = F × x_unit
-```
+$$
+\mathbf{x}_{\text{real}} = \mathbf{F} \times \mathbf{x}_{\text{unit}}
+$$
 
-其中 x_unit 是颗粒在单位立方体 [0,1]³ 中的坐标。
+其中 $\mathbf{x}_{\text{unit}}$ 是颗粒在单位立方体 $[0,1]^3$ 中的坐标。
 
 盒子的体积为：
 
-```
-V = |det(F)| = det(hSize)
-```
+$$
+V = |\det(\mathbf{F})| = \det(\text{hSize})
+$$
 
 #### YADE 中的实现
 
@@ -116,21 +114,17 @@ O.cell.refSize = Vector3(0.01, 0.01, 0.01)  # 1cm 的立方体
 当前变形梯度张量，是一个 3×3 矩阵（Matrix3 类型）。初始时等于
 refSize 的对角矩阵：
 
-```
-hSize = | Lx   0    0  |
-        | 0    Ly   0  |
-        | 0    0    Lz |
-```
+$$
+\text{hSize} = \begin{bmatrix} L_x & 0 & 0 \\ 0 & L_y & 0 \\ 0 & 0 & L_z \end{bmatrix}
+$$
 
 当施加剪切变形时，hSize 变为：
 
-```
-hSize = | Lx   γ·Ly  0  |    （xy 平面简单剪切）
-        | 0    Ly    0  |
-        | 0    0     Lz |
-```
+$$
+\text{hSize} = \begin{bmatrix} L_x & \gamma L_y & 0 \\ 0 & L_y & 0 \\ 0 & 0 & L_z \end{bmatrix} \quad \text{(xy 平面简单剪切)}
+$$
 
-其中 γ 是剪切应变。
+其中 $\gamma$ 是剪切应变。
 
 #### trsf
 
@@ -150,14 +144,12 @@ volume = O.cell.volume
 
 简单剪切是一种恒定体积的剪切变形，其变形梯度为：
 
-```
-F_simple = | 1    γ   0 |
-           | 0    1   0 |
-           | 0    0   1 |
-```
+$$
+\mathbf{F}_{\text{simple}} = \begin{bmatrix} 1 & \gamma & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}
+$$
 
-其中 γ 是剪切应变。简单剪切的特点：
-- 体积不变（det(F) = 1）
+其中 $\gamma$ 是剪切应变。简单剪切的特点：
+- 体积不变（$\det(\mathbf{F}) = 1$）
 - 主应力方向不断旋转
 - 模拟地基水平荷载、地震剪切等情况
 
@@ -172,13 +164,11 @@ O.cell.hSize[0, 1] += strainIncrement * O.cell.refSize[1]
 
 纯剪切是主应力方向固定的剪切变形：
 
-```
-F_pure = | 1+ε   0     0    |
-         | 0     1-ε   0    |
-         | 0     0     1    |
-```
+$$
+\mathbf{F}_{\text{pure}} = \begin{bmatrix} 1+\varepsilon & 0 & 0 \\ 0 & 1-\varepsilon & 0 \\ 0 & 0 & 1 \end{bmatrix}
+$$
 
-其中 ε 是剪切应变参数。纯剪切的特点：
+其中 $\varepsilon$ 是剪切应变参数。纯剪切的特点：
 - 体积不变
 - 主应力方向固定
 - 一个方向拉伸，另一个方向压缩
@@ -240,14 +230,14 @@ stressTensor = utils.getStressTensor()
 
 该函数计算代表性体积单元内的柯西应力张量：
 
-```
-σ_ij = (1/V) Σ f_i^(c) × l_j^(c)
-```
+$$
+\sigma_{ij} = \frac{1}{V} \sum_c f_i^{(c)} \times l_j^{(c)}
+$$
 
 其中：
-- V 是盒子体积
-- f_i^(c) 是第 c 个接触的接触力矢量
-- l_j^(c) 是第 c 个接触的接触支量臂矢量
+- $V$ 是盒子体积
+- $f_i^{(c)}$ 是第 $c$ 个接触的接触力矢量
+- $l_j^{(c)}$ 是第 $c$ 个接触的接触支量臂矢量
 - 求和遍历所有接触
 
 #### 应力不变量

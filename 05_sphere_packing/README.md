@@ -72,9 +72,10 @@ sp.makeCloud(
 ```
 
 半径生成规则：
-```
-r = rMean × (1 + rRelFuzz × uniform(-1, 1))
-```
+
+$$
+r = r_{\text{mean}} \times (1 + r_{\text{fuzz}} \times \text{uniform}(-1, 1))
+$$
 
 当 `rRelFuzz = 0` 时，所有颗粒半径相等（单分散）。
 当 `rRelFuzz = 0.3` 时，半径在 0.7×rMean 到 1.3×rMean 之间。
@@ -352,9 +353,9 @@ print(f"相对密度: {rd:.4f}")
 
 孔隙率（porosity）n 定义为：
 
-```
-n = V_void / V_total = 1 - V_solid / V_total
-```
+$$
+n = \frac{V_{\text{void}}}{V_{\text{total}}} = 1 - \frac{V_{\text{solid}}}{V_{\text{total}}}
+$$
 
 在 DEM 中的计算方法：
 

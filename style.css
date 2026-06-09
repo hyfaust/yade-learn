@@ -627,6 +627,11 @@ body {
 .md-content p {
   margin: 10px 0;
 }
+.md-content .math-display {
+  margin: 16px 0;
+  overflow-x: auto;
+  text-align: center;
+}
 .md-content a {
   color: var(--link-color);
   text-decoration: none;
@@ -739,24 +744,6 @@ body {
 }
 .collapsible-content.collapsed {
   max-height: 0;
-}
-
-/* --- SVG Animation Button --- */
-.view-animation-btn {
-  display: inline-block;
-  margin: 12px 0;
-  padding: 8px 20px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.2s, transform 0.1s;
-}
-.view-animation-btn:hover {
-  background: var(--highlight);
-  transform: scale(1.02);
 }
 
 /* --- Back to top --- */
