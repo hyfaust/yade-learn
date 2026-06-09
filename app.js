@@ -4396,11 +4396,12 @@ $$\\Delta p = (\\rho_p - \\rho_f) \\times (1 - \\varepsilon) \\times H_{\\text{b
     });
 
     // Render markdown
-    // Protect LaTeX \\ (line break) from being consumed by marked.js
-    var LATEX_DBLBACK = '\x00LATEXDBLBACK\x00';
-    var safeMd = chapter.markdown.replace(/\\\\/g, LATEX_DBLBACK);
+    // Protect LaTeX \\ (line break = 2 backslashes) from being consumed by marked.js
+    // Use split/join for exact match — regex /\\\\/g matches single \ too
+    var PH = '\x00LTX\x00';
+    var safeMd = chapter.markdown.split('\\\\').join(PH);
     var html = marked.parse(safeMd);
-    html = html.replace(new RegExp(LATEX_DBLBACK, 'g'), '\\\\\\\\');
+    html = html.split(PH).join('\\\\');
 
     // Protect display math ($$...$$) from being wrapped in <p> by marked.js
     // MathJax's default pattern requires $$ at line-start, which fails inside <p>
