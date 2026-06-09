@@ -4348,20 +4348,19 @@ $$\\Delta p = (\\rho_p - \\rho_f) \\times (1 - \\varepsilon) \\times H_{\\text{b
     });
   }
 
-  /** Typeset math in a DOM element, waiting for MathJax to be ready */
+  /** Typeset math in a DOM element, retrying until MathJax is ready */
   function typesetMath(element) {
     if (typeof MathJax === 'undefined') return;
-    // Wait for MathJax startup to complete, then typeset
-    var promise = MathJax.startup && MathJax.startup.promise
-      ? MathJax.startup.promise
-      : Promise.resolve();
-    promise.then(function () {
+    function tryTypeset() {
       if (MathJax.typesetPromise) {
-        return MathJax.typesetPromise([element]);
+        MathJax.typesetPromise([element]).catch(function () {
+          setTimeout(tryTypeset, 200);
+        });
+      } else {
+        setTimeout(tryTypeset, 200);
       }
-    }).catch(function (err) {
-      console.warn('MathJax typeset error:', err.message);
-    });
+    }
+    tryTypeset();
   }
 
   function escapeHtml(str) {
@@ -4397,7 +4396,11 @@ $$\\Delta p = (\\rho_p - \\rho_f) \\times (1 - \\varepsilon) \\times H_{\\text{b
     });
 
     // Render markdown
-    let html = marked.parse(chapter.markdown);
+    // Protect LaTeX \\ (line break) from being consumed by marked.js
+    var LATEX_DBLBACK = '\x00LATEXDBLBACK\x00';
+    var safeMd = chapter.markdown.replace(/\\\\/g, LATEX_DBLBACK);
+    var html = marked.parse(safeMd);
+    html = html.replace(new RegExp(LATEX_DBLBACK, 'g'), '\\\\\\\\');
 
     // Protect display math ($$...$$) from being wrapped in <p> by marked.js
     // MathJax's default pattern requires $$ at line-start, which fails inside <p>
