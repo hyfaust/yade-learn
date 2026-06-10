@@ -13,6 +13,7 @@ build/
 *.vtu
 *.vtp
 *.vtk
+*.xml.bz2
 /tmp/
 
 # OS
