@@ -629,8 +629,8 @@ body {
 }
 .md-content .math-display {
   margin: 16px 0;
-  overflow-x: auto;
   text-align: center;
+  overflow-x: visible;
 }
 .md-content a {
   color: var(--link-color);
