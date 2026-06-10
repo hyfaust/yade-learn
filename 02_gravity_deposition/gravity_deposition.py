@@ -13,8 +13,9 @@
     gravity_deposition.png  —— 沉降过程曲线图（接触数、动能随时间变化）
 """
 
-from yade import pack, plot
+from yade import pack, plot, qt
 from yade.utils import Vector3
+import time
 
 # ============================================================
 # 第一部分：定义数据记录函数
@@ -181,8 +182,15 @@ print(f"时间步长: {O.dt:.6e} s")
 print(f"总步数: 200000")
 print(f"预计仿真时间: {200000 * O.dt:.2f} s")
 
-# 运行 200,000 个时间步
-O.run(200000, True)
+# 启动 Qt GUI 3D 视图
+v = qt.View()
+
+# 运行 200,000 个时间步（非阻塞，GUI 可实时显示）
+O.run(200000, False)
+
+# 等待仿真完成
+while O.running:
+    time.sleep(0.1)
 
 print("仿真完成！")
 
@@ -198,4 +206,4 @@ print("图表已保存为 gravity_deposition.png")
 print(f"最终接触数: {len(O.interactions)}")
 print(f"系统动能: {kineticEnergy():.6e} J")
 
-quit()
+input("按回车键退出...")

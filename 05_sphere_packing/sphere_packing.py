@@ -785,4 +785,9 @@ print("=" * 60)
 print("\n演示完成！")
 print(f"临时文件保存在: {tmpDir}")
 
-quit()
+v = qt.View()
+import time
+while O.running:
+    time.sleep(0.1)
+
+input("按回车键退出...")

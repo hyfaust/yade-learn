@@ -427,9 +427,13 @@ if simulationPhase == 'consolidation':
     print("固结尚未完成，继续运行...")
     O.run(100000, True)
 
-# 固结完成后，运行加载阶段（阻塞模式）
+# 固结完成后，运行加载阶段（非阻塞模式，启用 Qt GUI）
+v = qt.View()
+import time
 print("\n开始加载阶段...")
-O.run(500000, True)
+O.run(500000, False)
+while O.running:
+    time.sleep(0.1)
 
 print("\n=== 三轴试验完成 ===")
 
@@ -483,4 +487,4 @@ print("\n=== 三轴试验完成 ===")
 # plt.savefig('/tmp/triaxial_results.png', dpi=150)
 # plt.show()
 
-quit()
+input("按回车键退出...")

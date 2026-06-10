@@ -15,7 +15,7 @@
 # ============================================================
 # 导入模块
 # ============================================================
-from yade import pack, plot, utils
+from yade import pack, plot, utils, qt
 from yade.utils import Vector3
 import math
 import os
@@ -356,6 +356,9 @@ print("=" * 60)
 print("\n开始拉伸试验...")
 print("-" * 60)
 
+# 启用 Qt GUI 显示
+v = qt.View()
+
 # 运行拉伸试验（checkFailure 函数会在破坏时暂停）
 O.run()
 import time
@@ -404,4 +407,4 @@ print("模拟完成！")
 # plt.savefig('/tmp/concrete_tension_results.png', dpi=150)
 # plt.show()
 
-quit()
+input("按回车键退出...")

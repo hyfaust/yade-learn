@@ -486,7 +486,17 @@ plot.resetData()
 # 运行模拟（有限步数，防止无限运行）
 print(f"正在运行中...（最多 {fluidMaxSteps} 步）")
 
-O.run(fluidMaxSteps, True)  # 阻塞运行，到达步数后自动停止
+# ============================================================
+# 启动 Qt 可视化
+# ============================================================
+from yade import qt
+v = qt.View()
+
+# 非阻塞运行，配合 Qt 可视化窗口
+import time
+O.run(fluidMaxSteps, False)
+while O.running:
+    time.sleep(0.1)
 
 print("模拟完成！")
 
@@ -536,4 +546,4 @@ print("模拟完成！")
 # plt.savefig('/tmp/fluid_coupling_results.png', dpi=150)
 # plt.show()
 
-quit()
+input("按回车键退出...")

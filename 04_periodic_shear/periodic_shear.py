@@ -418,6 +418,7 @@ print(f"开始剪切，目标应变: {maxShearStrain:.2f}")
 # ============================================================
 
 # 运行模拟，applyShear() 函数会自动在达到最大应变时暂停
+v = qt.View()
 O.run()
 import time
 while O.running:
@@ -476,4 +477,4 @@ print("模拟完成！")
 # plt.savefig('/tmp/periodic_shear_results.png', dpi=150)
 # plt.show()
 
-quit()
+input("按回车键退出...")

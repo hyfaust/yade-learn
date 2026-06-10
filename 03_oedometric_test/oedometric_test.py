@@ -18,6 +18,7 @@
 from yade import pack, plot, utils, qt
 from yade.utils import Vector3
 import numpy as np
+import time
 
 # ============================================================
 # 模拟参数定义
@@ -421,7 +422,15 @@ O.engines += [
 print("\n模拟运行中...")
 print("达到目标应变时自动停止")
 
-O.run(500000, True)
+# 启动 Qt GUI 3D 视图
+v = qt.View()
+
+# 运行模拟（非阻塞，GUI 可实时显示）
+O.run(500000, False)
+
+# 等待仿真完成
+while O.running:
+    time.sleep(0.1)
 
 print(f"\n=== 模拟结束 ===")
 print(f"最终 K0 值: {plot.data['K0'][-1]:.3f}" if plot.data.get('K0') else "")
@@ -465,4 +474,4 @@ print(f"最终轴向应力: {plot.data['stress'][-1]:.0f} Pa" if plot.data.get('
 # plt.savefig('/tmp/oedometric_results.png', dpi=150)
 # plt.show()
 
-quit()
+input("按回车键退出...")
