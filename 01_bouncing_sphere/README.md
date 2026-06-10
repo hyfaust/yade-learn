@@ -49,17 +49,14 @@ DEM 的核心思想可以用三个关键词概括：
 
 这个循环在数学上可以表示为：
 
-$$
-\begin{aligned}
-&\text{对每个时间步 } \Delta t\text{:} \\
-&\quad 1.\ \text{检测所有颗粒对之间的接触} \\
-&\quad 2.\ \text{对每个接触，计算接触力 (法向力 + 切向力)} \\
-&\quad 3.\ \text{对每个颗粒，计算合力 } F = \Sigma(\text{接触力}) + \text{重力} \\
-&\quad 4.\ \text{对每个颗粒，更新加速度 } a = F/m \\
-&\quad 5.\ \text{对每个颗粒，更新速度 } v = v + a \cdot \Delta t \\
-&\quad 6.\ \text{对每个颗粒，更新位置 } x = x + v \cdot \Delta t
-\end{aligned}
-$$
+对每个时间步 $\Delta t$：
+
+1. 检测所有颗粒对之间的接触
+2. 对每个接触，计算接触力（法向力 + 切向力）
+3. 对每个颗粒，计算合力 $F = \sum(\text{接触力}) + \text{重力}$
+4. 对每个颗粒，更新加速度 $a = F/m$
+5. 对每个颗粒，更新速度 $v = v + a \cdot \Delta t$
+6. 对每个颗粒，更新位置 $x = x + v \cdot \Delta t$
 
 ### 2.2 DEM 与连续介质方法的对比
 
