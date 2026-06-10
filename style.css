@@ -629,13 +629,8 @@ body {
 }
 .md-content .math-display {
   margin: 16px 0;
-  overflow-x: auto;
   text-align: center;
-}
-/* Prevent MathJax from creating vertical scrollbars */
-.md-content .math-display mjx-container {
-  overflow-y: visible !important;
-  max-height: none !important;
+  overflow-x: visible;
 }
 .md-content a {
   color: var(--link-color);
