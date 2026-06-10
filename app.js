@@ -4350,7 +4350,9 @@ $$\\Delta p = (\\rho_p - \\rho_f) \\times (1 - \\varepsilon) \\times H_{\\text{b
     if (typeof MathJax === 'undefined') return;
     function tryTypeset() {
       if (MathJax.typesetPromise) {
-        MathJax.typesetPromise([element]).catch(function () {
+        MathJax.typesetPromise([element]).then(function () {
+          scaleWideMath(element);
+        }).catch(function () {
           setTimeout(tryTypeset, 200);
         });
       } else {
@@ -4358,6 +4360,30 @@ $$\\Delta p = (\\rho_p - \\rho_f) \\times (1 - \\varepsilon) \\times H_{\\text{b
       }
     }
     tryTypeset();
+  }
+
+  /** Scale down wide MathJax display formulas to fit container width */
+  function scaleWideMath(container) {
+    container.querySelectorAll('.math-display mjx-container[display="true"]').forEach(function (el) {
+      var parent = el.parentElement;
+      if (!parent) return;
+      var maxW = parent.clientWidth;
+      var w = el.scrollWidth;
+      if (w > maxW) {
+        var ratio = maxW / w;
+        var wrapper = document.createElement('div');
+        wrapper.style.overflow = 'hidden';
+        wrapper.style.maxWidth = '100%';
+        wrapper.style.margin = '1em 0';
+        el.parentNode.insertBefore(wrapper, el);
+        wrapper.appendChild(el);
+        el.style.transform = 'scale(' + ratio + ')';
+        el.style.transformOrigin = 'top center';
+        el.style.width = (100 / ratio) + '%';
+        el.style.margin = '0';
+        wrapper.style.height = (el.offsetHeight * ratio) + 'px';
+      }
+    });
   }
 
   function escapeHtml(str) {
