@@ -4396,9 +4396,22 @@ $$\\Delta p = (\\rho_p - \\rho_f) \\times (1 - \\varepsilon) \\times H_{\\text{b
     // Protect LaTeX \\ (line break = 2 backslashes) from being consumed by marked.js
     // Use split/join for exact match — regex /\\\\/g matches single \ too
     var PH = '\x00LTX\x00';
+    var PHU = '\x00LTXU\x00';
     var safeMd = chapter.markdown.split('\\\\').join(PH);
+
+    // Protect underscores inside $$...$$ blocks from being treated as emphasis by marked.js
+    // Find $$...$$ blocks and replace _ with placeholder
+    safeMd = safeMd.replace(/\$\$([\s\S]*?)\$\$/g, function (m, inner) {
+      return '$$' + inner.replace(/_/g, PHU) + '$$';
+    });
+
     var html = marked.parse(safeMd);
     html = html.split(PH).join('\\\\');
+
+    // Restore underscores inside math blocks (now in HTML as $$...$$ or <div>$$...$$</div>)
+    html = html.replace(/\$\$([\s\S]*?)\$\$/g, function (m, inner) {
+      return '$$' + inner.split(PHU).join('_') + '$$';
+    });
 
     // Protect display math ($$...$$) from being wrapped in <p> by marked.js
     // MathJax's default pattern requires $$ at line-start, which fails inside <p>
